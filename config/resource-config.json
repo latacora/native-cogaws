@@ -1,0 +1,6 @@
+{
+  "resources":[
+    {"pattern":"\\Qcognitect/aws/s3/service.edn\\E"}
+  ],
+  "bundles":[]
+}

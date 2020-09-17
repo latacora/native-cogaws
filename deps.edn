@@ -1,5 +1,12 @@
 {:paths ["src" "resources"]
- :deps {org.clojure/clojure {:mvn/version "1.10.1"}}
+ :deps {
+        org.clojure/clojure {:mvn/version "RELEASE"}
+        com.cognitect.aws/api {:mvn/version "0.8.474"}
+        com.cognitect.aws/endpoints {:mvn/version "1.1.11.842"}
+        com.cognitect.aws/s3 {:mvn/version "809.2.734.0"}
+        ;; com.cognitect/http-client {:mvn/version "0.1.104"}
+        ;; org.martinklepsch/clj-http-lite {:mvn/version "0.4.3"}
+        }
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
@@ -9,6 +16,23 @@
                  :sha "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
    :main-opts ["-m" "cognitect.test-runner"
                "-d" "test"]}
+  :native-image {:main-opts ["-m clj.native-image latacora.native-cogaws"
+                             "--verbose"
+                             ;; "--no-fallback"
+                             "--initialize-at-build-time"
+                             "--report-unsupported-elements-at-runtime"
+                             "--allow-incomplete-classpath"
+                             "-Dclojure.compiler.direct-linking=true"
+                             "-H:Name=native-cogaws"
+                             "-H:+RemoveSaturatedTypeFlows"
+                             "-H:+PrintClassInitialization"
+                             "-H:ConfigurationFileDirectories=./config"
+                             "-H:+ReportExceptionStackTraces"
+                             ]
+                 :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
+                 :extra-deps {clj.native-image/clj.native-image {:git/url "https://github.com/taylorwood/clj.native-image.git"
+                                                                 :sha "f3e40672d5c543b80a2019c1f07b2d3fe785962c"}
+                              }}
   :uberjar {:extra-deps {seancorfield/depstar {:mvn/version "1.0.94"}}
             :main-opts ["-m" "hf.depstar.uberjar" "native-cogaws.jar"
                         "-C" "-m" "latacora.native-cogaws"]}}}

@@ -1,6 +1,7 @@
 {
   "resources":[
       {"pattern":"\\Qcognitect/aws/s3/service.edn\\E"},
+      {"pattern":"\\Qcognitect/aws/http/cognitect.clj\\E"},
       {"pattern":"\\Qcognitect_aws_http.edn\\E"}
   ],
   "bundles":[]

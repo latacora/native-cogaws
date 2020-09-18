@@ -14,4 +14,6 @@
   (println "Hello, World! - I'm a native thing!")
   (let [s3 (aws/client {:api :s3})]
     (println "s3 client has been initialized")
-    (aws/invoke s3 {:op :ListBuckets})))
+    (println "here are your buckets: ")
+    (println (aws/invoke s3 {:op :ListBuckets}))))
+

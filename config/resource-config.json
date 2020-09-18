@@ -1,6 +1,7 @@
 {
   "resources":[
       {"pattern":"\\Qcognitect/aws/protocols/rest_xml.clj\\E"},
+      {"pattern":"\\Qcognitect/aws/endpoints.edn\\E"},
       {"pattern":"\\Qcognitect/aws/s3/service.edn\\E"},
       {"pattern":"\\Qcognitect/aws/http/cognitect.clj\\E"},
       {"pattern":"\\Qcognitect_aws_http.edn\\E"}

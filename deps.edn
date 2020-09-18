@@ -25,6 +25,7 @@
                              "--report-unsupported-elements-at-runtime"
                              "--allow-incomplete-classpath"
                              "-Dclojure.compiler.direct-linking=true"
+                             "-H:EnableURLProtocols=http,https"
                              "-H:Name=native-cogaws"
                              "-H:+RemoveSaturatedTypeFlows"
                              "-H:+PrintClassInitialization"

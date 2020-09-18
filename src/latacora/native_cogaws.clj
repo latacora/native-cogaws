@@ -1,6 +1,6 @@
 (ns latacora.native-cogaws
   (:require
-   [cognitect.aws.http.cognitect :as anothe]
+   [cognitect.aws.http.cognitect]
    [cognitect.aws.protocols.rest-xml]
    [cognitect.aws.client.api :as aws])
   (:gen-class))

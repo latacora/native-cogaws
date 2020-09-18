@@ -25,11 +25,11 @@
                              "--report-unsupported-elements-at-runtime"
                              "--allow-incomplete-classpath"
                              "-Dclojure.compiler.direct-linking=true"
+                             "-H:ConfigurationFileDirectories=./config"
                              "-H:EnableURLProtocols=http,https"
                              "-H:Name=native-cogaws"
-                             "-H:+RemoveSaturatedTypeFlows"
                              "-H:+PrintClassInitialization"
-                             "-H:ConfigurationFileDirectories=./config"
+                             "-H:+RemoveSaturatedTypeFlows"
                              "-H:+ReportExceptionStackTraces"
                              ]
                  :jvm-opts ["-Dclojure.compiler.direct-linking=true"]

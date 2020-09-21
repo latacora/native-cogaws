@@ -17,6 +17,18 @@
 ;;                                                :Bucket bucket
 ;;                                                }})
 ;;   )
+(defmacro rethrow
+  "Convenience macro to rethrow errors from
+  cognitect.aws.client.api. Macro so that it doesn't add to the
+  stacktrace."
+  [aws-response]
+  `(let [response# ~aws-response
+         ;; two different keywords for throwables >:(
+         throwable# (or (:cognitect.aws.http.cognitect/throwable response#)
+                        (:throwable response#))]
+     (if throwable#
+       (throw throwable#)
+       response#)))
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -26,10 +38,10 @@
         bucket "latacora-webhook-logs-test"]
     (println "s3 client has been initialized")
     (println "here are your buckets: ")
-    (println (aws/invoke s3 {:op :ListBuckets}))
+    (println (rethrow (aws/invoke s3 {:op :ListBuckets})))
     (println "saving a file")
-    (println (aws/invoke s3 {:op :PutObject :request {:Bucket bucket
-                                                      :Key "test/out"
-                                                      :Body (.getBytes (json/generate-string "here is some json!"))}}))  (println (aws/invoke s3 {:op :ListBuckets}))
+    (println (rethrow (aws/invoke s3 {:op :PutObject :request {:Bucket bucket
+                                                               :Key "test/out"
+                                                               :Body (.getBytes (json/generate-string "here is some json!"))}})))  (println (aws/invoke s3 {:op :ListBuckets}))
     ))
 

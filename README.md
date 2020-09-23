@@ -1,46 +1,12 @@
 # native-cogaws
 
-FIXME: my new application.
+A sketch of the steps necessary to get the cognitect aws s3 api read and write from inside a native-image executable.
 
-## Installation
-
-Download from https://github.com/latacora/native-cogaws.
-
-## Usage
-
-FIXME: explanation
-
-Run the project directly:
-
-    $ clojure -m latacora.native-cogaws
-
-Run the project's tests (they'll fail until you edit them):
-
-    $ clojure -A:test:runner
-
-Build an uberjar:
-
-    $ clojure -A:uberjar
-
-Run that uberjar:
-
-    $ java -jar native-cogaws.jar
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+The steps are roughly:
+1. generate reflection, resource, proxy, etc. configuration files by running an uberjar that calls your functions
+2. explicitly require namespaces that throw errors related to `defineClass` in your clojure code (this requires running your native-image executables and seeeing if they throw this exception for any namespaces)
+3. enable native-image support for https
+4. add borkdude/clj-reflector-graal-java11-fix to fix  UnsupportedFeatureError for MethodHandle
 
 ## License
 

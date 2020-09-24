@@ -7,7 +7,7 @@ The steps are roughly:
 
  ```$GRAALVM_HOME/bin/java -agentlib:native-image-agent=config-output-dir=/path/to/config-dir/ <your uberjar run command>```
 
-The above use's graalvm's "agent" to track usages of java's dynamic features and generate the appropriate config files. See [here](https://www.graalvm.org/reference-manual/native-image/Configuration/#assisted-configuration-of-native-image-builds) for more details.
+The above uses graalvm's "agent" to track usages of java's dynamic features and generate the appropriate config files. See [here](https://www.graalvm.org/reference-manual/native-image/Configuration/#assisted-configuration-of-native-image-builds) for more details.
 
 2. point native-image to the config files directory by giving it the following flag `-H:ConfigurationFileDirectories=<path/to/config/directory>`
 3. explicitly require namespaces that throw errors related to `defineClass` in your clojure code (this requires running your native-image executables and seeeing if they throw this exception for any namespaces)

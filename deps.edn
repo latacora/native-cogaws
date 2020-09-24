@@ -2,25 +2,20 @@
  :deps {
         org.clojure/clojure {:mvn/version "RELEASE"}
         com.cognitect/http-client {:mvn/version "0.1.104"}
+        cheshire/cheshire {:mvn/version "5.10.0"}
         com.cognitect.aws/api {:mvn/version "0.8.474"}
         com.cognitect.aws/endpoints {:mvn/version "1.1.11.842"}
         com.cognitect.aws/s3 {:mvn/version "809.2.734.0"}
-
+        ;; crypto-equality/crypto-equality {:mvn/version "1.0.0"}
+        ;; pandect/pandect {:mvn/version "0.6.1"}
         ;; com.cognitect/http-client {:mvn/version "0.1.104"}
         ;; org.martinklepsch/clj-http-lite {:mvn/version "0.4.3"}
         }
  :aliases
- {:test {:extra-paths ["test"]
-         :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
-  :runner
-  {:extra-deps {com.cognitect/test-runner
-                {:git/url "https://github.com/cognitect-labs/test-runner"
-                 :sha "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
-   :main-opts ["-m" "cognitect.test-runner"
-               "-d" "test"]}
+ {
   :native-image {:main-opts ["-m clj.native-image latacora.native-cogaws"
                              "--verbose"
-                             ;; "--no-fallback"
+                             "--no-fallback"
                              "--initialize-at-build-time"
                              "--report-unsupported-elements-at-runtime"
                              "--allow-incomplete-classpath"
@@ -33,9 +28,20 @@
                              "-H:+ReportExceptionStackTraces"
                              ]
                  :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
-                 :extra-deps {clj.native-image/clj.native-image {:git/url "https://github.com/taylorwood/clj.native-image.git"
+                 :extra-deps {clj.native-image/clj-native-image {:git/url "https://github.com/taylorwood/clj.native-image.git"
                                                                  :sha "f3e40672d5c543b80a2019c1f07b2d3fe785962c"}
+                              borkdude/clj-reflector-graal-java11-fix {:mvn/version "0.0.1-graalvm-20.2.0"
+                                                                       :exclusions [org.graalvm.nativeimage/svm]}
                               }}
+  :test {:extra-paths ["test"]
+         :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
+  :runner
+  {:extra-deps {com.cognitect/test-runner
+                {:git/url "https://github.com/cognitect-labs/test-runner"
+                 :sha "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
+   :main-opts ["-m" "cognitect.test-runner"
+               "-d" "test"]}
+
   :uberjar {:extra-deps {seancorfield/depstar {:mvn/version "1.0.94"}}
             :main-opts ["-m" "hf.depstar.uberjar" "native-cogaws.jar"
                         "-C" "-m" "latacora.native-cogaws"]}}}

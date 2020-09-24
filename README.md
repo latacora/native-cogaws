@@ -1,46 +1,18 @@
 # native-cogaws
 
-FIXME: my new application.
+A sketch of the steps necessary to get the cognitect aws s3 api read and write from inside a native-image executable. This repo was built with GraalVM 20.2.0 and the below steps may change in future versions.
 
-## Installation
+The steps are roughly:
+1. generate reflection, resource, proxy, and jni configuration files by building an uberjar that calls all api functions you expect to call. Then run the uberjar with the following command:
 
-Download from https://github.com/latacora/native-cogaws.
+ ```$GRAALVM_HOME/bin/java -agentlib:native-image-agent=config-output-dir=/path/to/config-dir/ <your uberjar run command>```
 
-## Usage
+The above use's graalvm's "agent" to track usages of java's dynamic features and generate the appropriate config files. See [here](https://www.graalvm.org/reference-manual/native-image/Configuration/#assisted-configuration-of-native-image-builds) for more details.
 
-FIXME: explanation
-
-Run the project directly:
-
-    $ clojure -m latacora.native-cogaws
-
-Run the project's tests (they'll fail until you edit them):
-
-    $ clojure -A:test:runner
-
-Build an uberjar:
-
-    $ clojure -A:uberjar
-
-Run that uberjar:
-
-    $ java -jar native-cogaws.jar
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+2. point native-image to the config files directory by giving it the following flag `-H:ConfigurationFileDirectories=<path/to/config/directory>`
+3. explicitly require namespaces that throw errors related to `defineClass` in your clojure code (this requires running your native-image executables and seeeing if they throw this exception for any namespaces)
+4. enable native-image support for https by adding `-H:EnableURLProtocols=http,https` to the native-image compile flags. [reference](https://www.graalvm.org/reference-manual/native-image/URLProtocols/)
+5. add borkdude/clj-reflector-graal-java11-fix to fix UnsupportedFeatureError in clojure.lang.Reflector related to MethodHandle. [reference](https://github.com/borkdude/clj-reflector-graal-java11-fix#the-problem)
 
 ## License
 
